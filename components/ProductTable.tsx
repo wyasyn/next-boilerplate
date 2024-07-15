@@ -109,7 +109,7 @@ export default async function ProductTable() {
                         </DropdownMenuLabel>
                         <DropdownMenuItem>
                           <Link
-                            href={`/detail/${product.id}`}
+                            href={`/product/detail/${product.id}`}
                             className=" w-full "
                           >
                             <Button

@@ -3,16 +3,43 @@ import prisma from "@/lib/db";
 import fs from "fs/promises";
 import { randomUUID } from "crypto";
 // Example: Add an image to a product
-export async function addImageToProduct(productId: number, imageUrl: string) {
-  const image = await prisma.image.create({
-    data: {
-      url: imageUrl,
-      product: {
-        connect: { id: productId },
+export async function addImageToProduct(productId: number, formData: FormData) {
+  const image = formData.get("image") as File;
+
+  if (!image) {
+    return {
+      message: "No file sent",
+    };
+  }
+  if (!productId) {
+    return {
+      message: "Id not sent",
+    };
+  }
+  try {
+    await fs.mkdir("public/uploads", { recursive: true });
+
+    const imagePath = `/uploads/${randomUUID()}-${image.name}`;
+    await fs.writeFile(
+      `public${imagePath}`,
+      Buffer.from(await image.arrayBuffer())
+    );
+    await prisma.image.create({
+      data: {
+        url: imagePath,
+        product: {
+          connect: { id: productId },
+        },
       },
-    },
-  });
-  return image;
+    });
+    return {
+      message: "Image added successfully",
+    };
+  } catch (error) {
+    return {
+      error: `Error: ${error}`,
+    };
+  }
 }
 
 // Example: Get all images for a product

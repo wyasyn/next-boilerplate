@@ -21,22 +21,21 @@ import {
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
-import { getProductsByCategoryName } from "@/app/actions/product";
+
 import DeleteProduct from "@/components/deleteProduct";
+import { getProductsBySearch } from "@/app/actions/product";
 
 export default async function page({
-  params: { category },
+  searchParams: { s },
 }: {
-  params: { category: string };
+  searchParams: { s: string };
 }) {
-  const categories = await getProductsByCategoryName(category);
-  const products = categories[0].products;
-
+  const products = await getProductsBySearch(s);
   if (products.length === 0) {
     return (
       <div className=" p-[5rem] border rounded-xl bg-card flex items-center justify-center text-center ">
-        <p className=" text-muted-foreground text-xl md:text-3xl ">
-          No Products found!
+        <p className=" text-muted-foreground text-lg md:text-xl italic ">
+          No Products matching your search term.
         </p>
       </div>
     );
@@ -44,10 +43,8 @@ export default async function page({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Products</CardTitle>
-        <CardDescription>
-          Manage your products and view their sales performance.
-        </CardDescription>
+        <CardTitle>Search: {s}</CardTitle>
+        <CardDescription>Product information</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
@@ -95,7 +92,7 @@ export default async function page({
                     {product.supplier.name}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {categories[0].name}
+                    {product.category.name}
                   </TableCell>
                   <TableCell>
                     <DropdownMenu>

@@ -16,7 +16,7 @@ export default function SubmitButton() {
         size="sm"
         className=" text-xs border border-emerald-500 text-emerald-500 duration-300 ease-in-out font-medium hover:text-emerald-800 hover:border-emerald-800 hover:bg-transparent rounded-lg "
       >
-        {pending ? "adding..." : "Add Product"}
+        {pending ? "adding..." : "Save Product"}
       </Button>
     </div>
   );

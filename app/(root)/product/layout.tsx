@@ -1,8 +1,9 @@
 import CategoryNav from "@/components/categoryNav";
-import SearchInput from "@/components/SearchInput";
+
+import SearchInputForm from "@/components/SearchInputForm";
 import { Button } from "@/components/ui/button";
 import { categoryData } from "@/constants/userData";
-import { Plus, Search } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -15,23 +16,14 @@ export default function layout({ children }: { children: ReactNode }) {
             <CategoryNav key={item.name} {...item} />
           ))}
         </ul>
-        <SearchInput />
+
         <ul className=" flex items-center gap-2 justify-end ">
           <li>
-            <Button
-              size="icon"
-              variant="ghost"
-              className=" border-none md:hidden text-xs border border-emerald-500 text-emerald-500 duration-300 ease-in-out font-medium hover:border-emerald-400 hover:text-emerald-300 hover:bg-transparent rounded-full "
-              title="Search Product"
-            >
-              <span className=" block lg:hidden ">
-                <Search size={16} />
-              </span>
-            </Button>
+            <SearchInputForm />
           </li>
 
           <li>
-            <Link href="/add-product">
+            <Link href="/product/add-product">
               {" "}
               <Button
                 size="sm"

@@ -77,14 +77,21 @@ export async function editProduct(productId: number, updatedData: any) {
   try {
     const updatedProduct = await prisma.product.update({
       where: { id: productId },
-      data: updatedData,
+      data: {
+        name: updatedData.name,
+        description: updatedData.description,
+        price: parseFloat(updatedData.price),
+        quantity: parseInt(updatedData.quantity, 10),
+      },
     });
 
-    console.log("Product updated:", updatedProduct);
-    return updatedProduct;
+    return {
+      message: "Product updated successfully",
+    };
   } catch (error) {
-    console.error("Error updating product:", error);
-    throw error;
+    return {
+      message: `Update failed: ${error}`,
+    };
   } finally {
     await prisma.$disconnect();
   }
