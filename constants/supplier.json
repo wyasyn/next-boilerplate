@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "name": "Chic & Co.",
+    "contact": "555-001-2345"
+  },
+  {
+    "id": 2,
+    "name": "Elegant Threads",
+    "contact": "555-002-3456"
+  },
+  {
+    "id": 3,
+    "name": "Boutique Essentials",
+    "contact": "555-003-4567"
+  },
+  {
+    "id": 4,
+    "name": "Glamour Goods",
+    "contact": "555-004-5678"
+  },
+  {
+    "id": 5,
+    "name": "Fashion Foundry",
+    "contact": "555-005-6789"
+  },
+  {
+    "id": 6,
+    "name": "Trendy Treasures",
+    "contact": "555-006-7890"
+  },
+  {
+    "id": 7,
+    "name": "Style Haven",
+    "contact": "555-007-8901"
+  },
+  {
+    "id": 8,
+    "name": "Signature Styles",
+    "contact": "555-008-9012"
+  },
+  {
+    "id": 9,
+    "name": "Timeless Trends",
+    "contact": "555-009-0123"
+  },
+  {
+    "id": 10,
+    "name": "Posh Supplies",
+    "contact": "555-010-1234"
+  },
+  {
+    "id": 11,
+    "name": "Curated Closet",
+    "contact": "555-011-2345"
+  },
+  {
+    "id": 12,
+    "name": "Urban Elegance",
+    "contact": "555-012-3456"
+  },
+  {
+    "id": 13,
+    "name": "Sustainable Styles",
+    "contact": "555-013-4567"
+  },
+  {
+    "id": 14,
+    "name": "Artisan Attire",
+    "contact": "555-014-5678"
+  },
+  {
+    "id": 15,
+    "name": "Luxury Layers",
+    "contact": "555-015-6789"
+  }
+]

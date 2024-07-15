@@ -1,0 +1,119 @@
+{
+  "categories": [
+    {
+      "name": " 👗 Clothing 👚",
+      "products": [
+        {
+          "name": "T-Shirt",
+          "description": "Comfortable cotton T-shirt perfect for casual wear.",
+          "price": 19.99,
+          "quantity": 50
+        },
+        {
+          "name": "Jeans",
+          "description": "Classic denim jeans that offer both style and comfort.",
+          "price": 49.99,
+          "quantity": 30
+        },
+        {
+          "name": "Dress",
+          "description": "Lightweight summer dress ideal for warm weather.",
+          "price": 39.99,
+          "quantity": 20
+        }
+      ]
+    },
+    {
+      "name": " 👠 Footwear 👟",
+      "products": [
+        {
+          "name": "Sneakers",
+          "description": "High-quality running shoes for all your athletic needs.",
+          "price": 59.99,
+          "quantity": 40
+        },
+        {
+          "name": "Sandals",
+          "description": "Stylish leather sandals suitable for casual outings.",
+          "price": 29.99,
+          "quantity": 25
+        },
+        {
+          "name": "Boots",
+          "description": "Durable winter boots designed to keep your feet warm.",
+          "price": 89.99,
+          "quantity": 15
+        }
+      ]
+    },
+    {
+      "name": "Accessories 💍 👜",
+      "products": [
+        {
+          "name": "Hat",
+          "description": "Wide-brimmed sun hat offering excellent UV protection.",
+          "price": 15.99,
+          "quantity": 35
+        },
+        {
+          "name": "Scarf",
+          "description": "Warm wool scarf to keep you cozy in cold weather.",
+          "price": 25.99,
+          "quantity": 40
+        },
+        {
+          "name": "Belt",
+          "description": "Elegant leather belt to complement any outfit.",
+          "price": 19.99,
+          "quantity": 50
+        }
+      ]
+    },
+    {
+      "name": "Jewelry 💎",
+      "products": [
+        {
+          "name": "Necklace",
+          "description": "Exquisite gold necklace that adds a touch of luxury.",
+          "price": 129.99,
+          "quantity": 10
+        },
+        {
+          "name": "Bracelet",
+          "description": "Chic silver bracelet perfect for any occasion.",
+          "price": 49.99,
+          "quantity": 20
+        },
+        {
+          "name": "Earrings",
+          "description": "Stunning diamond earrings for a sophisticated look.",
+          "price": 199.99,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "name": "Bags",
+      "products": [
+        {
+          "name": "Handbag",
+          "description": "Premium leather handbag with ample storage space.",
+          "price": 89.99,
+          "quantity": 15
+        },
+        {
+          "name": "Backpack",
+          "description": "Durable canvas backpack suitable for daily use.",
+          "price": 59.99,
+          "quantity": 25
+        },
+        {
+          "name": "Wallet",
+          "description": "Compact leather wallet with multiple compartments.",
+          "price": 29.99,
+          "quantity": 40
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model User {
+  id            String          @id @default(cuid())
+  username      String          @unique
+  firstName     String?
+  lastName      String?
+  email         String?         @unique
+  emailVerified DateTime?
+  role          UserRole        @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  password      String?
+  Authenticator Authenticator[]
+  images        Image[]
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+}
+
+model Image {
+  id         String   @id @default(cuid())
+  url        String
+  userId     String?
+  productId  Int?
+  supplierId Int?
+
+  user       User?    @relation(fields: [userId], references: [id])
+  product    Product? @relation(fields: [productId], references: [id])
+  supplier   Supplier?@relation(fields: [supplierId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+}
+
+model Supplier {
+  id         Int       @id @default(autoincrement())
+  name       String
+  contact    String
+  products   Product[]
+  images     Image[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  quantity    Int
+  categoryId  Int
+  category    Category  @relation(fields: [categoryId], references: [id])
+  supplierId  Int
+  supplier    Supplier  @relation(fields: [supplierId], references: [id])
+  images      Image[]
+  orders      Order[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Order {
+  id          Int       @id @default(autoincrement())
+  productId   Int
+  product     Product   @relation(fields: [productId], references: [id])
+  quantity    Int
+  total       Float
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
