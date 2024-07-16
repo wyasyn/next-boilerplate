@@ -29,6 +29,7 @@ export async function getSuppliers() {
     const suppliers = await prisma.supplier.findMany({
       include: {
         images: true,
+        products: true,
       },
     });
     return suppliers;
@@ -48,6 +49,7 @@ export async function getSupplier(id: number) {
       },
       include: {
         images: true,
+        products: true,
       },
     });
     return supplier;

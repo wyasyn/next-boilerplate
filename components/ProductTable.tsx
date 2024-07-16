@@ -117,7 +117,7 @@ export default async function ProductTable() {
                               size="sm"
                               className=" w-full "
                             >
-                              Edit
+                              View
                             </Button>
                           </Link>
                         </DropdownMenuItem>

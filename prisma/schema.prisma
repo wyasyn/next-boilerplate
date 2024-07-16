@@ -18,6 +18,7 @@ model User {
   firstName     String?
   lastName      String?
   email         String?         @unique
+  coverImage    String?
   emailVerified DateTime?
   role          UserRole        @default(USER)
   accounts      Account[]
@@ -134,9 +135,16 @@ model Product {
   updatedAt   DateTime  @updatedAt
 }
 
+enum OrderStatus {
+  FULLFILLED
+  DECLINED
+  PENDING
+}
+
 model Order {
   id          Int       @id @default(autoincrement())
   productId   Int
+  status      OrderStatus @default(PENDING)
   product     Product   @relation(fields: [productId], references: [id])
   quantity    Int
   total       Float

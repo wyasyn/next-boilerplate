@@ -1,5 +1,9 @@
 import AddProductForm from "@/components/addProductForm";
 
 export default function page() {
-  return <AddProductForm />;
+  return (
+    <div className=" max-w-lg mx-auto ">
+      <AddProductForm />
+    </div>
+  );
 }

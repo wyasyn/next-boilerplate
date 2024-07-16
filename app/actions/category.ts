@@ -23,7 +23,11 @@ export const addCategory = async (name: string) => {
 
 export const getAllCategories = async () => {
   try {
-    const categories = await prisma.category.findMany();
+    const categories = await prisma.category.findMany({
+      include: {
+        products: true,
+      },
+    });
     return categories;
   } catch (error) {
     console.error("Error getting categories:", error);

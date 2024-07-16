@@ -1,8 +1,15 @@
 "use server";
 
 import prisma from "@/lib/db";
+import { OrderStatus } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
-export async function createOrder(productId: number, quantity: number) {
+export async function createOrder(formData: FormData) {
+  const productIdInput = formData.get("productId") as string;
+  const quantityInput = formData.get("quantity") as string;
+
+  const productId = parseInt(productIdInput);
+  const quantity = parseInt(quantityInput);
   try {
     // Fetch the product to get the price
     const product = await prisma.product.findUnique({
@@ -10,7 +17,9 @@ export async function createOrder(productId: number, quantity: number) {
     });
 
     if (!product) {
-      throw new Error("Product not found");
+      return {
+        error: "Product does not exist in the database",
+      };
     }
 
     // Calculate total price
@@ -25,17 +34,30 @@ export async function createOrder(productId: number, quantity: number) {
       },
     });
 
-    console.log("Order created:", newOrder);
-    return newOrder;
+    revalidatePath("/order");
+
+    return {
+      success: "Order made successfully",
+    };
   } catch (error) {
-    console.error("Error creating order:", error);
-    throw error;
+    return {
+      error: `Error: ${error}`,
+    };
   } finally {
     await prisma.$disconnect();
   }
 }
 
-export async function editOrder(orderId: number, quantity: number) {
+export async function editOrder(formData: FormData) {
+  const orderIdInput = formData.get("orderId") as string;
+  const quantityInput = formData.get("quantity") as string;
+  const status = formData.get("status") as OrderStatus;
+  const orderId = parseInt(orderIdInput);
+  const quantity = parseInt(quantityInput);
+  if (!orderIdInput || !quantityInput || !status)
+    return {
+      error: "Invalid inputs",
+    };
   try {
     // Fetch the existing order to check if it exists
     const existingOrder = await prisma.order.findUnique({
@@ -43,7 +65,9 @@ export async function editOrder(orderId: number, quantity: number) {
     });
 
     if (!existingOrder) {
-      throw new Error("Order not found");
+      return {
+        error: "Order not found",
+      };
     }
 
     // Fetch the product to get the price
@@ -52,7 +76,9 @@ export async function editOrder(orderId: number, quantity: number) {
     });
 
     if (!product) {
-      throw new Error("Product not found");
+      return {
+        error: "Product not found",
+      };
     }
 
     // Calculate new total price
@@ -63,15 +89,20 @@ export async function editOrder(orderId: number, quantity: number) {
       where: { id: orderId },
       data: {
         quantity,
+        status,
         total,
       },
     });
 
-    console.log("Order updated:", updatedOrder);
-    return updatedOrder;
+    revalidatePath("/order");
+
+    return {
+      success: "Order update successful",
+    };
   } catch (error) {
-    console.error("Error editing order:", error);
-    throw error;
+    return {
+      error: `Error: ${error}`,
+    };
   } finally {
     await prisma.$disconnect();
   }
@@ -114,6 +145,9 @@ export async function getAllOrders() {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return orders;
@@ -152,6 +186,29 @@ export async function getOrdersByProductId(productId: number) {
   try {
     const orders = await prisma.order.findMany({
       where: { productId },
+      include: {
+        product: {
+          include: {
+            supplier: true,
+            images: true,
+          },
+        },
+      },
+    });
+
+    return orders;
+  } catch (error) {
+    console.error("Error fetching orders by product ID:", error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function getOrdersByStatus(status: OrderStatus) {
+  try {
+    const orders = await prisma.order.findMany({
+      where: { status },
       include: {
         product: {
           include: {

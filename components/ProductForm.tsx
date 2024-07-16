@@ -54,7 +54,7 @@ export default function ProductForm({
   return (
     <form
       action={createProduct}
-      className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8 py-10"
+      className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8 pb-12"
     >
       <SubmitButton />
       <Card x-chunk="dashboard-07-chunk-0">

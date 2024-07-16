@@ -123,7 +123,7 @@ export default async function page({
                               size="sm"
                               className=" w-full "
                             >
-                              Edit
+                              View
                             </Button>
                           </Link>
                         </DropdownMenuItem>

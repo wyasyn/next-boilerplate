@@ -52,7 +52,7 @@ export default async function SupplierTable() {
                 <DropdownMenuItem>
                   <Link href={`/supplier/${supplier.id}`} className=" w-full ">
                     <Button variant="ghost" size="sm" className=" w-full ">
-                      Edit
+                      View
                     </Button>
                   </Link>
                 </DropdownMenuItem>

@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,6 +17,7 @@ import EditSupplierForm from "@/components/editSupplier";
 import { UploadSupplierImage } from "@/components/UploadSupplierImage";
 import { DrawerDialogComponent } from "@/components/DrawerComponent";
 import BackButton from "@/components/BackButton";
+import Link from "next/link";
 
 export default async function page({
   params: { id },
@@ -33,7 +35,7 @@ export default async function page({
             <div className="flex items-center gap-4">
               <BackButton />
               <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-                Edit Details
+                Edit {supplier.name}
               </h1>
             </div>
 
@@ -43,7 +45,24 @@ export default async function page({
                 name={supplier?.name}
                 contact={supplier?.contact}
               />
+
               <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+                {supplier.products && supplier.products.length > 0 && (
+                  <Card>
+                    <CardHeader>{supplier.name} products</CardHeader>
+                    <CardContent className=" flex gap-1 flex-wrap ">
+                      {supplier.products.map((item) => (
+                        <Link
+                          className=" text-muted-foreground "
+                          href={`/product/detail/${item.id}`}
+                          key={item.id}
+                        >
+                          {item.name}{" "}
+                        </Link>
+                      ))}
+                    </CardContent>
+                  </Card>
+                )}
                 <Card
                   className="overflow-hidden"
                   x-chunk="dashboard-07-chunk-4"

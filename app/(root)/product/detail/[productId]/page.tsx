@@ -27,7 +27,7 @@ export default async function page({
   if (!product) NotFound();
   if (product) {
     return (
-      <div className="flex min-h-screen w-full flex-col  py-[5rem]">
+      <div className="flex min-h-screen w-full flex-col  pb-[5rem]">
         <main className="grid flex-1 items-start gap-4  md:gap-8">
           <div className=" grid flex-1 auto-rows-max gap-4">
             <div className="flex items-center gap-4">
