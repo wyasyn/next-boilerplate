@@ -70,7 +70,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.username = token.username;
         session.user.firstName = token.firstName;
         session.user.lastName = token.lastName;
-        session.user.image = token.image;
+        session.user.profileImage = token.profileImage;
+        session.user.coverImage = token.coverImage;
       }
 
       if (token.role && session.user) {
@@ -90,7 +91,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       token.username = existingUser.username;
       token.firstName = existingUser.firstName;
       token.lastName = existingUser.lastName;
-      token.image = existingUser.images[0].url;
+      token.profileImage = existingUser.profileImage;
+      token.coverImage = existingUser.coverImage;
       return token;
     },
   },

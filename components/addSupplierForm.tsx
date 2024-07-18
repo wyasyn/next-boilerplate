@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import "react-phone-number-input/style.css";
+import PhoneInput, { Value } from "react-phone-number-input";
 import {
   Form,
   FormControl,
@@ -17,6 +19,9 @@ import { Input } from "./ui/input";
 import { addSupplier } from "@/app/actions/supplier";
 import { useRouter } from "next/navigation";
 
+// Define E164Number as a string type
+type E164Number = string;
+
 export const formSchema = z.object({
   name: z.string().min(3, {
     message: "Supplier name is required",
@@ -25,6 +30,7 @@ export const formSchema = z.object({
     message: "Contact is required",
   }),
 });
+
 export default function AddSupplierForm() {
   const router = useRouter();
   const [message, setMessage] = useState<string | undefined>("");
@@ -53,6 +59,7 @@ export default function AddSupplierForm() {
       setLoading(false);
     }
   }
+
   return (
     <Form {...form}>
       <form
@@ -79,7 +86,15 @@ export default function AddSupplierForm() {
             <FormItem>
               <FormLabel>Contact</FormLabel>
               <FormControl>
-                <Input placeholder="Contact" {...field} />
+                <PhoneInput
+                  defaultCountry="UG"
+                  placeholder="(256)-765-425-145"
+                  international
+                  withCountryCallingCode
+                  className=" input-phone input-phone-input "
+                  value={field.value as E164Number | undefined}
+                  onChange={field.onChange as (value: Value) => void}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

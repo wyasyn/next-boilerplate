@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/db";
 import { User } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const getUserById = async function getUserWithImages(userId: string) {
   try {
@@ -49,18 +50,39 @@ export const deleteUser = async (userId: string) => {
   }
 };
 
-export const updateUser = async (userId: string, data: Partial<User>) => {
+export const updateUser = async (userId: string, formData: FormData) => {
+  const firstName = formData.get("firstName") as string;
+  const lastName = formData.get("lastName") as string;
+  const username = formData.get("username") as string;
+  const email = formData.get("email") as string;
+  const bio = formData.get("bio") as string;
+  if (!userId) {
+    return {
+      error: "No user selected",
+    };
+  }
+
   try {
-    const updatedUser = await prisma.user.update({
+    await prisma.user.update({
       where: {
         id: userId,
       },
-      data,
+      data: {
+        username,
+        email,
+        firstName,
+        lastName,
+        bio,
+      },
     });
-    return updatedUser;
+    revalidatePath("/settings");
+    return {
+      success: "Information updated successfully",
+    };
   } catch (error) {
-    console.error(error);
-    throw error;
+    return {
+      error: `Error: ${error}`,
+    };
   }
 };
 

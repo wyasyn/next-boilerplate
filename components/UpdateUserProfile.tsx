@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import FileUploader from "./uploader";
-import { addImageToProduct } from "@/app/actions/addImages";
+import { updateUserProfileImage } from "@/app/actions/addImages";
 import { useRouter } from "next/navigation";
 
 // Define the schema for a single file
@@ -29,7 +29,7 @@ export const formSchema = z.object({
   }),
 });
 
-export function UploadProductImage({ id }: { id: number }) {
+export function UploadUserProfile({ id }: { id: string }) {
   const router = useRouter();
   const [message, setMessage] = useState<string | undefined>("");
   const [loading, setLoading] = useState(false);
@@ -52,14 +52,11 @@ export function UploadProductImage({ id }: { id: number }) {
       setLoading(true);
       console.log(selectedImage);
 
-      const res = await addImageToProduct(id, formData);
+      const res = await updateUserProfileImage(id, formData);
       if (res.message) {
         setMessage(res.message);
       }
       router.refresh();
-      if (res.error) {
-        setMessage(res.error);
-      }
     } catch (error) {
       console.error("Error uploading image:", error);
       const errorMessage =
@@ -97,7 +94,7 @@ export function UploadProductImage({ id }: { id: number }) {
           type="submit"
           disabled={loading}
         >
-          {loading ? "Loading..." : "Submit"}
+          {loading ? "Loading..." : "Update"}
         </Button>
         {message && <p className="text-sm text-gray-600">{message}</p>}
       </form>

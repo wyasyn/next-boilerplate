@@ -18,6 +18,8 @@ model User {
   firstName     String?
   lastName      String?
   email         String?         @unique
+  profileImage  String?
+  bio           String?
   coverImage    String?
   emailVerified DateTime?
   role          UserRole        @default(USER)

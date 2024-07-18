@@ -67,3 +67,20 @@
     @apply bg-background text-foreground text-sm;
   }
 }
+
+@layer utilities {
+  .input-phone {
+    @apply border rounded-lg px-3 py-2 focus-within:border-foreground duration-300 ease-in-out;
+  }
+}
+
+.input-phone-input {
+  input {
+    background: none;
+    padding: 0.5em 0.75em;
+    outline: none;
+  }
+  &::placeholder {
+    color: var(hsl(--muted-foreground));
+  }
+}

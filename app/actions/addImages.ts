@@ -63,6 +63,87 @@ export async function addImageToUser(userId: string, imageUrl: string) {
   return image;
 }
 
+export async function updateUserCoverImage(userId: string, formData: FormData) {
+  const image = formData.get("image") as File;
+
+  if (!image) {
+    return {
+      message: "No file sent",
+    };
+  }
+  if (!userId) {
+    return {
+      message: "Id not sent",
+    };
+  }
+  try {
+    await fs.mkdir("public/uploads", { recursive: true });
+
+    const imagePath = `/uploads/${randomUUID()}-${image.name}`;
+    await fs.writeFile(
+      `public${imagePath}`,
+      Buffer.from(await image.arrayBuffer())
+    );
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        coverImage: imagePath,
+      },
+    });
+    return {
+      message: "Cover image updated successfully",
+    };
+  } catch (error) {
+    return {
+      message: `Error: ${error}`,
+    };
+  }
+}
+
+export async function updateUserProfileImage(
+  userId: string,
+  formData: FormData
+) {
+  const image = formData.get("image") as File;
+
+  if (!image) {
+    return {
+      message: "No file sent",
+    };
+  }
+  if (!userId) {
+    return {
+      message: "Id not sent",
+    };
+  }
+  try {
+    await fs.mkdir("public/uploads", { recursive: true });
+
+    const imagePath = `/uploads/${randomUUID()}-${image.name}`;
+    await fs.writeFile(
+      `public${imagePath}`,
+      Buffer.from(await image.arrayBuffer())
+    );
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        profileImage: imagePath,
+      },
+    });
+    return {
+      success: "Cover image updated successfully",
+    };
+  } catch (error) {
+    return {
+      error: `Error: ${error}`,
+    };
+  }
+}
+
 // Example: Get all images for a user
 export async function getUserImages(userId: string) {
   const images = await prisma.image.findMany({

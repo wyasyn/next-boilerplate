@@ -34,10 +34,10 @@ export const formSchema = z.object({
   description: z.string().min(3, {
     message: "Supplier name is required",
   }),
-  price: z.number().min(3, {
+  price: z.coerce.number().min(3, {
     message: "Supplier name is required",
   }),
-  quantity: z.number().min(3, {
+  quantity: z.coerce.number().min(3, {
     message: "Supplier name is required",
   }),
 });

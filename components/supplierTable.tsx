@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { TableBody, TableCell, TableRow } from "./ui/table";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +13,7 @@ import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { getSuppliers } from "@/app/actions/supplier";
 import DeleteSupplier from "./deleteSupplier";
+import PhoneNumberCell from "./PhoneNumberCell";
 
 export default async function SupplierTable() {
   const suppliers = await getSuppliers();
@@ -33,7 +35,7 @@ export default async function SupplierTable() {
             />
           </TableCell>
           <TableCell className="font-medium">{supplier.name}</TableCell>
-          <TableCell>{supplier.contact}</TableCell>
+          <PhoneNumberCell phoneNumber={supplier.contact} />
           <TableCell className="hidden md:table-cell">
             {new Date(supplier.createdAt).toLocaleDateString()}
           </TableCell>

@@ -14,7 +14,7 @@ import { ModeToggle } from "./modeToggle";
 
 export default async function UserAvator() {
   const session = await auth();
-  const userImage = session?.user.image;
+  const profileImage = session?.user.profileImage;
   const firstName = session?.user.firstName;
   const lastName = session?.user.lastName;
   if (!session) return;
@@ -24,7 +24,7 @@ export default async function UserAvator() {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar title={firstName + " " + lastName}>
-            <AvatarImage src={userImage ? userImage : "/user.png"} />
+            <AvatarImage src={profileImage ? profileImage : "/user.png"} />
             <AvatarFallback>{firstName[0] + lastName[0]}N</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>

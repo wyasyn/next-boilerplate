@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import "react-phone-number-input/style.css";
+import PhoneInput, { Value } from "react-phone-number-input";
+type E164Number = string;
 import {
   Form,
   FormControl,
@@ -111,7 +114,15 @@ export default function EditSupplierForm({
                   <FormItem className="grid gap-3">
                     <FormLabel>Contact</FormLabel>
                     <FormControl>
-                      <Input className="w-full" {...field} />
+                      <PhoneInput
+                        defaultCountry="UG"
+                        placeholder="(256)-765-425-145"
+                        international
+                        withCountryCallingCode
+                        className=" input-phone input-phone-input "
+                        value={field.value as E164Number | undefined}
+                        onChange={field.onChange as (value: Value) => void}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
